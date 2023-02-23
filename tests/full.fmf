@@ -29,5 +29,5 @@ component:
 tier: 1
 tag:
   - basic
-test: pytest-3 -v .
+test: pytest-3 -v -k test_local_build_from_srpm .
 duration: 30m

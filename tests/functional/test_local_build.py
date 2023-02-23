@@ -64,9 +64,20 @@ def test_local_build_from_srpm(ogr_distgit_and_remote):
         parameters=["--debug", "build", "--srpm", the_chosen_srpm, "locally"],
         cwd=ogr_distgit_and_remote[0],
     )
-    rpm_paths = ogr_distgit_and_remote[0].glob("noarch/*.rpm")
+    rpm_paths = list(ogr_distgit_and_remote[0].glob("noarch/*.rpm"))
 
     # we need to be able to find a part of version and release in the built RPMs
     # if not ⇒ we ran RPM build from the CWD
     version_release = re.search(r"ogr-(.*)\.main.*", str(the_chosen_srpm)).group(1)
+    import pprint
+    import subprocess
+
+    pprint.pprint((version_release, rpm_paths))
+    pprint.pprint(list(ogr_distgit_and_remote[0].rglob("*")))
+    pprint.pprint(
+        subprocess.check_output(
+            ["python3", "-c", "import packit; print(packit.__file__)"]
+        )
+    )
     assert all(version_release in str(path) for path in rpm_paths)
+    assert False

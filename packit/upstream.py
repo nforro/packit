@@ -1017,6 +1017,7 @@ class SRPMBuilder:
         else:
             new_release = self.upstream.get_spec_release(release_suffix)
 
+        logger.debug("@@@ about to run fix_spec()")
         if self.upstream.with_action(action=ActionName.fix_spec, env=env):
             self.upstream.fix_spec(
                 archive=archive,
@@ -1033,6 +1034,7 @@ class SRPMBuilder:
         release_suffix: Optional[str] = None,
         create_symlinks: Optional[bool] = True,
     ):
+        logger.debug("@@@ SRPMBuilder.prepare()")
         if self.upstream_ref:
             self._prepare_upstream_using_source_git(update_release, release_suffix)
         else:
